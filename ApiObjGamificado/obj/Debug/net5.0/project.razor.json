@@ -1,0 +1,20 @@
+{
+  "SerializedFilePath": "c:\\Users\\rossa\\OneDrive\\Área de Trabalho\\faculdade\\ObjAmbGamificado\\TodoApi\\obj\\Debug\\net5.0\\project.razor.json",
+  "FilePath": "c:\\Users\\rossa\\OneDrive\\Área de Trabalho\\faculdade\\ObjAmbGamificado\\TodoApi\\TodoApi.csproj",
+  "Configuration": {
+    "ConfigurationName": "MVC-3.0",
+    "LanguageVersion": "5.0",
+    "Extensions": [
+      {
+        "ExtensionName": "MVC-3.0"
+      }
+    ]
+  },
+  "ProjectWorkspaceState": {
+    "TagHelpers": [],
+    "CSharpLanguageVersion": 900
+  },
+  "RootNamespace": "TodoApi",
+  "Documents": [],
+  "SerializationFormat": "0.3"
+}
