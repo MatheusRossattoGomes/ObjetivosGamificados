@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aulas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="inicio.html">Inicio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="aulas.html">Aulas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="objetivos.html">Objetivos para casa</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content" class="container mt-4">   
+            <div class="d-flex bd-highlight mb-3">
+              <div class="me-auto p-2 bd-highlight"><h2>Aulas</div>
+              <div class="p-2 bd-highlight">
+                <button type="button" class="btn btn-secondary" onclick="loadTable()">Recarregar dados</button>                
+                <a class="btn btn-secondary" href="aulaForm.html">Criar</a>
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Data da aula</th>
+                  </tr>
+                </thead>
+                <tbody id="mytable">
+                  <tr>
+                    <th scope="row" colspan="6">Carregando...</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+    <script src="baseUrl.js"></script>
+    <script src="aulas.js"></script>
+</body>
+</html>

@@ -32,7 +32,22 @@ ON TiposObjetivos (Descricao);
 
 INSERT INTO TiposObjetivos (Id, Descricao) VALUES (-1, 'Video'), (-2, 'Texto'), (-3, 'Questionário');
 
+CREATE TABLE Aula (
+  Id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  Descricao VARCHAR(100) NOT NULL,
+  Resumo VARCHAR(MAX) NOT NULL,
+  DataAula DATETIME NOT NULL,
+  IdUsuario BIGINT NOT NULL,
+  CONSTRAINT IdUsuarioAula
+    FOREIGN KEY (IdUsuario)
+    REFERENCES Usuario (Id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
+CREATE UNIQUE INDEX Id_UNIQUE
+ON Aula (Id);
+CREATE UNIQUE INDEX Descricao_UNIQUE
+ON Aula (Descricao);
 
 CREATE TABLE Objetivos (
   Id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
@@ -42,10 +57,16 @@ CREATE TABLE Objetivos (
   DataEntrega DATE NOT NULL,
   Quantidade INT NOT NULL,
   IdTipoObjetivo BIGINT NOT NULL,
+  IdAula BIGINT,
   IdUsuario BIGINT NOT NULL,
   CONSTRAINT IdUsuario
     FOREIGN KEY (IdUsuario)
     REFERENCES Usuario (Id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT IdAula
+    FOREIGN KEY (IdAula)
+    REFERENCES Aula (Id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT IdTipoObjetivo

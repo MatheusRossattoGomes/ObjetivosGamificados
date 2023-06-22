@@ -15,11 +15,16 @@ public class ObjetivosMap : EntityBaseConfiguration<Objetivos>
         builder.Property(x => x.DataCriacao);
         builder.Property(x => x.Quantidade);
         builder.Property(x => x.TipoObjetivo).HasColumnName("IdTipoObjetivo");
+        builder.Property(x => x.IdAula);
         builder.Property(x => x.IdUsuario);
 
         builder.HasOne(x => x.Usuario)
         .WithMany(x => x.Objetivos)
         .HasForeignKey(x => x.IdUsuario);
+
+        builder.HasOne(x => x.Aula)
+        .WithMany(x => x.Objetivos)
+        .HasForeignKey(x => x.IdAula);
         // builder.HasOne(p => p.Engine).WithOne().HasForeignKey<Engine>(p => p.CarId);
     }
 }

@@ -22,4 +22,20 @@ public interface IObjetivosGamificadosRepository
 
     void DeleteObjetivo(long id);
 
+    long AddAula(Aula entity);
+
+    List<AulaGridDto> GetAulasDto(long idUsuario);
+    
+    List<ObjetivoDto> GetObjetivosAula(long idAula);
+    
+    Aula GetAula(long idAula);
+    
+    AulaDto GetAulaDto(long idAula);
+
+    public void AlterarObjetivosAula(List<Objetivos> entities);
+
+    long AlterarAula(Aula entity);
+
+    void DeleteAula(long id);
+
 }

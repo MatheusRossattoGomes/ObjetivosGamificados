@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #ffffff;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333333;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #dddddd;
+      border-radius: 4px;
+      font-size: 16px;
+      color: #333333;
+      background-color: #ffffff;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="date"] {
+      padding-right: 40px;
+    }
+
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 40px;
+      background-image: url("https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-down-b-512.png");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 20px;
+    }
+
+    .form-group input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .form-group input[type="submit"] {
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .form-group input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: #ff0000;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <form onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="description">Descrição:</label>
+        <input type="text" id="description" name="description" placeholder="Digite a descrição" required>
+      </div>
+      <div class="form-group">
+        <label for="creation-date">Data de criação:</label>
+        <input type="date" id="creation-date" name="creation-date" required>
+      </div>
+      <div class="form-group">
+        <label for="objective-type">Tipo do objetivo:</label>
+        <select id="objective-type" name="objective-type" required>
+          <option value="-1">Texto</option>
+          <option value="-2">Vídeo</option>
+          <option value="-3">Questionário</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantidade:</label>
+        <input type="number" id="quantity" name="quantity" placeholder="Digite a quantidade" required>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Enviar">
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      var description = document.getElementById("description").value;
+      var creationDate = document.getElementById("creation-date").value;
+      var quantity = document.getElementById("quantity").value;
+
+      // Check if any field is blank
+      if (description === "" || creationDate === "" || quantity === "") {
+        alert("Todos os campos são obrigatórios");
+        return false;
+      }
+
+      // Check if quantity is a positive number
+      if (quantity <= 0) {
+        alert("A quantidade deve ser um número positivo");
+        return false;
+      }
+
+      // Check if creation date is today or later
+      var today = new Date().toISOString().split("T")[0];
+      if (creationDate < today) {
+        alert("A data de criação não pode ser anterior à data atual");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</body>
+</html>

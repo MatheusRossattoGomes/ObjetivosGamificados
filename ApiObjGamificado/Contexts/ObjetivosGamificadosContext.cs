@@ -11,6 +11,7 @@ namespace Contexts
         }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Objetivos> Objetivos { get; set; }
+        public DbSet<Aula> Aulas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -18,6 +19,8 @@ namespace Contexts
                 .ApplyConfiguration(new UsuarioMap());
             modelBuilder
                 .ApplyConfiguration(new ObjetivosMap());
+            modelBuilder
+                .ApplyConfiguration(new AulaMap());
         }
     }
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Criar Aula</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="aulaForm.css">
+</head>
+
+<body>
+    <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+        <h2 class="mb-4">Criar Aula</h2>
+        <form id="aulaForm" class="w-100">
+            <div class="mb-3">
+                <div class="row">
+                    <div>
+                        <input id="id" type="hidden">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="descricaoInput" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricaoInput" maxlength="100" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="dataInput" class="form-label">Data da aula</label>
+                        <input type="date" class="form-control" id="dataInput" required>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="resumoInput" class="form-label">Resumo</label>
+                <textarea class="form-control" id="resumoInput" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">Objetivos</h5>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="criarObjetivoBtn">Criar</button>
+                        <button type="button" class="btn btn-primary" id="deletarObjetivoBtn">Remover</button>
+                    </div>
+                </div>
+                <table id="objetivosList" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" name="Id">#</th>
+                            <th scope="col" name="Descricao">Descrição</th>
+                            <th scope="col" name="DataCriacao">Data de criação</th>
+                            <th scope="col" name="DataEntrega">Data de entrega</th>
+                            <th scope="col" name="Quantidade">Quantidade</th>
+                            <th scope="col" name="TipoObjetivo">Tipo de objetivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Objectives list will be dynamically populated here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </form>
+        <div class="modal fade" id="createObjetivoModal" tabindex="-1" aria-labelledby="createObjetivoModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createObjetivoModalLabel">Criar Objetivo</h5>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="fecharModal()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="objetivoForm">
+                            <div>
+                                <input id="idObjetivo" type="hidden">
+                            </div>
+                            <div class="mb-3">
+                                <label for="descricaoObjetivoInput" class="form-label">Descrição</label>
+                                <input type="text" class="form-control" id="descricaoObjetivoInput" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dataEntregaInput" class="form-label">Data de entrega</label>
+                                <input type="date" class="form-control" id="dataEntregaInput" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tipoInput" class="form-label">Tipo de objetivo</label>
+                                <select class="form-select" id="tipoInput" required>
+                                    <option value="-1">Texto</option>
+                                    <option value="-2">Vídeo</option>
+                                    <option value="-3">Questionário</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label id="labelQuantidade" for="quantidadeInput" class="form-label">Quantidade de
+                                    páginas</label>
+                                <input type="number" class="form-control" id="quantidadeInput" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="fecharModal()">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="baseUrl.js"></script>
+    <script src="aulaForm.js"></script>
+</body>
+
+</html>

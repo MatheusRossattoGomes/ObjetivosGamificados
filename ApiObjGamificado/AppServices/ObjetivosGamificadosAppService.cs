@@ -69,7 +69,7 @@ public class ObjetivosGamificadosAppService : IObjetivosGamificadosAppService
     {
         dto.DataCriacao = DateTime.Now;
         var objetivoString = GetObjetivoString(dto);
-        var Objetivo = new Objetivos(objetivoString, dto.Descricao, dto.DataCriacao.Value, dto.DataEntrega, dto.Quantidade, dto.TipoObjetivo, dto.IdUsuario);
+        var Objetivo = new Objetivos(objetivoString, dto.Descricao, dto.DataCriacao.Value, dto.DataEntrega, dto.Quantidade, dto.TipoObjetivo, dto.IdUsuario, dto.IdAula);
         var id = _objetivosGamificadosRepository.AddObjetivo(Objetivo);
         return id;
     }
@@ -123,4 +123,91 @@ public class ObjetivosGamificadosAppService : IObjetivosGamificadosAppService
     }
 
     #endregion Objetivo
+
+    #region Aulas
+
+    public List<AulaGridDto> GetAulas(long idUsuario)
+    {
+        var dados = _objetivosGamificadosRepository.GetAulasDto(idUsuario);
+        return dados;
+    }
+
+    public AulaDto GetAula(long idAula)
+    {
+        var dados = _objetivosGamificadosRepository.GetAulaDto(idAula);
+        return dados;
+    }
+
+    public List<ObjetivoDto> GetObjetivosAula(long idAula)
+    {
+        var dados = _objetivosGamificadosRepository.GetObjetivosAula(idAula);
+        return dados;
+    }
+
+    public long AddAula(AulaDto dto)
+    {
+        var Aula = new Aula(dto.Descricao, dto.Resumo, dto.DataAula, dto.IdUsuario);
+        var objetivos = dto.Objetivos?.Select(x => new Objetivos("", x.Descricao, DateTime.Now, x.DataEntrega, x.Quantidade, x.TipoObjetivo, dto.IdUsuario, x.IdAula)).ToList();
+        objetivos?.ForEach(x => Aula.AddObjetivo(x));
+        var id = _objetivosGamificadosRepository.AddAula(Aula);
+        return id;
+    }
+
+    public void DeleteAula(long id)
+    {
+        _objetivosGamificadosRepository.DeleteAula(id);
+    }
+
+    public long AlterarAula(AulaDto dto)
+    {
+        var aula = _objetivosGamificadosRepository.GetAula(dto.Id.Value);
+        aula.DataAula = dto.DataAula;
+        aula.Descricao = dto.Descricao;
+        aula.Resumo = dto.Resumo;
+
+        GerenciarObjetivosAula(aula, dto.Objetivos, aula.Objetivos);
+
+        var id = _objetivosGamificadosRepository.AlterarAula(aula);
+        return id;
+    }
+
+    private void GerenciarObjetivosAula(Aula aula, List<ObjetivoDto> objetivosDto, List<Objetivos> objetivosEntidade)
+    {
+        // Find objetivos to insert
+        var objetivosToInsert = objetivosDto?.Where(o => !objetivosEntidade.Any(e => e.Id == o.Id))
+        .Select(x => new Objetivos("", x.Descricao, DateTime.Now, x.DataEntrega, x.Quantidade, x.TipoObjetivo, aula.IdUsuario, aula.Id)).ToList();
+        // Find objetivos to update
+        var objetivosToUpdate = objetivosEntidade?.Where(o => objetivosDto.Any(e => e.Id == o.Id)).Select(x => x).ToList();
+        // Find objetivos to delete
+        var objetivosToDelete = objetivosEntidade?.Where(e => !objetivosDto.Any(o => o.Id == e.Id)).Select(x => x).ToList();
+
+        objetivosToInsert.ForEach(x => aula.AddObjetivo(x));
+        AlterarObjetivosAula(objetivosToUpdate, objetivosDto);
+        objetivosToDelete.ForEach(x => aula.RemoveObjetivo(x));
+
+    }
+
+    public void AlterarObjetivosAula(List<Objetivos> objetivos, List<ObjetivoDto> objetivosDto)
+    {
+        if (objetivos.Count() <= 0) return;
+
+        objetivos.ForEach(x =>
+        {
+            var dto = objetivosDto.FirstOrDefault(y => y.Id == x.Id);
+            AlterarObjetivoAula(dto, x);
+        });
+
+        _objetivosGamificadosRepository.AlterarObjetivosAula(objetivos);
+    }
+
+    public void AlterarObjetivoAula(ObjetivoDto dto, Objetivos objetivo)
+    {
+        objetivo.DataEntrega = dto.DataEntrega;
+        objetivo.Descricao = dto.Descricao;
+        objetivo.Quantidade = dto.Quantidade;
+        objetivo.TipoObjetivo = dto.TipoObjetivo;
+    }
+
+    #endregion Aulas
+
 }

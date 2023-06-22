@@ -1,58 +1,38 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<head>
+  <title>Home Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
 
-    <title>Objetivos gamificados protótipo</title>
-
-    <link href="index.css" rel="stylesheet">
-  </head>
-  <body>
-       
-    <nav class="navbar navbar-dark bg-mynav">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Objetivos gamificados</a>
-      </div>
-    </nav>
-
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highlight"><h2>Objetivos</div>
-        <div class="p-2 bd-highlight">
-          <button type="button" class="btn btn-secondary" onclick="loadTable()">Recarregar dados</button>
-          <button type="button" class="btn btn-secondary" onclick="showUserCreateBox()">Criar</button>
-        </div>
-      </div>
-      
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Descrição</th>
-              <th scope="col">Data de criação</th>
-              <th scope="col">Data de entrega</th>
-              <th scope="col">Quantidade</th>
-              <th scope="col">Tipo de objetivo</th>
-            </tr>
-          </thead>
-          <tbody id="mytable">
-            <tr>
-              <th scope="row" colspan="5">Loading...</th>
-            </tr>
-          </tbody>
-        </table>
+      <a class="navbar-brand" href="inicio.html">Inicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="aulas.html">Aulas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="objetivos.html">Objetivos para casa</a>
+          </li>
+        </ul>
       </div>
     </div>
+  </nav>
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-  </body>
+  <div id="content" class="container py-5"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>

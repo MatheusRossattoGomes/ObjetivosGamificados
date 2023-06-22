@@ -14,6 +14,7 @@ public class ObjetivoDto
     public int Quantidade { get; set; }
     public TiposObjetivosEnum TipoObjetivo { get; set; }
     public string TipoObjetivoString => TipoObjetivo.ToString();
+    public long? IdAula { get; set; }
     public long IdUsuario { get; set; }
 
 }

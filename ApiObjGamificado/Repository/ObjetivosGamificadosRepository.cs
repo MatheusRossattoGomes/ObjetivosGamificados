@@ -54,7 +54,7 @@ public class ObjetivosGamificadosRepository : IObjetivosGamificadosRepository
     {
         using (_context)
         {
-            var objetivos = (from o in _context.Objetivos.Where(x => x.IdUsuario == idUsuario)
+            var objetivos = (from o in _context.Objetivos.Where(x => x.IdUsuario == idUsuario && x.IdAula == null)
                              select new ObjetivoDto()
                              {
                                  Id = o.Id,
@@ -87,12 +87,15 @@ public class ObjetivosGamificadosRepository : IObjetivosGamificadosRepository
 
     public long AlterarObjetivo(Objetivos entity)
     {
-        var objetivo = (from o in _context.Objetivos.Where(x => x.Id == 1)
-                        select o).FirstOrDefault();
         _context.Update(entity);
         _context.SaveChanges();
 
         return entity.Id;
+    }
+
+    public void AlterarObjetivosAula(List<Objetivos> entities)
+    {
+        entities.ForEach(x => _context.Update(x));
     }
 
     public void DeleteObjetivo(long id)
@@ -102,6 +105,112 @@ public class ObjetivosGamificadosRepository : IObjetivosGamificadosRepository
             var Objetivo = (from o in _context.Objetivos.Where(x => x.Id == id)
                             select o).FirstOrDefault();
             _context.Remove(Objetivo);
+            _context.SaveChanges();
+        }
+    }
+
+    public long AddAula(Aula Aula)
+    {
+        _context.Add(Aula);
+        _context.SaveChanges();
+        return Aula.Id;
+    }
+
+    public List<AulaGridDto> GetAulasDto(long idUsuario)
+    {
+        using (_context)
+        {
+            var aulas = (from a in _context.Aulas.Where(x => x.IdUsuario == idUsuario)
+                         select new AulaGridDto()
+                         {
+                             Id = a.Id,
+                             DataAula = a.DataAula,
+                             Descricao = a.Descricao,
+                             Resumo = a.Resumo
+                         }).ToList();
+
+            return aulas;
+        }
+    }
+
+    public List<ObjetivoDto> GetObjetivosAula(long idAula)
+    {
+        using (_context)
+        {
+            var objetivos = (from o in _context.Objetivos.Where(x => x.IdAula == idAula)
+                             select new ObjetivoDto()
+                             {
+                                 Id = o.Id,
+                                 DataEntrega = o.DataEntrega,
+                                 DataCriacao = o.DataCriacao,
+                                 Descricao = o.Descricao,
+                                 IdUsuario = o.IdUsuario,
+                                 Objetivo = o.Objetivo,
+                                 Quantidade = o.Quantidade,
+                                 TipoObjetivo = o.TipoObjetivo
+                             }).ToList();
+
+            return objetivos;
+        }
+    }
+
+    public Aula GetAula(long idAula)
+    {
+        var aula = (from a in _context.Aulas.Where(x => x.Id == idAula)
+                    select a).FirstOrDefault();
+
+        aula.Objetivos = (from o in _context.Objetivos.Where(x => x.IdAula == aula.Id)
+                          select o).ToList();
+
+        return aula;
+    }
+
+    public AulaDto GetAulaDto(long idAula)
+    {
+        using (_context)
+        {
+            var aula = (from a in _context.Aulas.Where(x => x.Id == idAula)
+                        select new AulaDto()
+                        {
+                            DataAula = a.DataAula,
+                            Descricao = a.Descricao,
+                            Id = a.Id,
+                            IdUsuario = a.IdUsuario,
+                            Resumo = a.Resumo
+                        }).FirstOrDefault();
+
+            aula.Objetivos = (from o in _context.Objetivos.Where(x => x.IdAula == aula.Id)
+                              select new ObjetivoDto()
+                              {
+                                  Id = o.Id,
+                                  DataEntrega = o.DataEntrega,
+                                  DataCriacao = o.DataCriacao,
+                                  Descricao = o.Descricao,
+                                  IdUsuario = o.IdUsuario,
+                                  Objetivo = o.Objetivo,
+                                  Quantidade = o.Quantidade,
+                                  TipoObjetivo = o.TipoObjetivo
+                              }).ToList();
+
+            return aula;
+        }
+    }
+
+    public long AlterarAula(Aula entity)
+    {
+        _context.Update(entity);
+        _context.SaveChanges();
+
+        return entity.Id;
+    }
+
+    public void DeleteAula(long id)
+    {
+        using (_context)
+        {
+            var aula = (from a in _context.Aulas.Where(x => x.Id == id)
+                        select a).FirstOrDefault();
+            _context.Remove(aula);
             _context.SaveChanges();
         }
     }
