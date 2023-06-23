@@ -69,7 +69,7 @@ public class ObjetivosGamificadosAppService : IObjetivosGamificadosAppService
     {
         dto.DataCriacao = DateTime.Now;
         var objetivoString = GetObjetivoString(dto);
-        var Objetivo = new Objetivos(objetivoString, dto.Descricao, dto.DataCriacao.Value, dto.DataEntrega, dto.Quantidade, dto.TipoObjetivo, dto.IdUsuario, dto.IdAula);
+        var Objetivo = new Objetivos(objetivoString, dto.Descricao, dto.DataCriacao.Value, dto.DataEntrega.Value, dto.Quantidade, dto.TipoObjetivo, dto.IdUsuario, dto.IdAula);
         var id = _objetivosGamificadosRepository.AddObjetivo(Objetivo);
         return id;
     }
@@ -77,7 +77,7 @@ public class ObjetivosGamificadosAppService : IObjetivosGamificadosAppService
     public long AlterarObjetivo(ObjetivoDto dto)
     {
         var objetivo = _objetivosGamificadosRepository.GetObjetivo(dto.Id.Value);
-        objetivo.DataEntrega = dto.DataEntrega;
+        objetivo.DataEntrega = dto.DataEntrega.Value;
         objetivo.Descricao = dto.Descricao;
         objetivo.Quantidade = dto.Quantidade;
         objetivo.TipoObjetivo = dto.TipoObjetivo;
@@ -91,7 +91,7 @@ public class ObjetivosGamificadosAppService : IObjetivosGamificadosAppService
     private string GetObjetivoString(ObjetivoDto dto)
     {
         var texto = "";
-        int periodoEmDias = (dto.DataEntrega - dto.DataCriacao.Value).Days + 2;
+        int periodoEmDias = (dto.DataEntrega.Value - dto.DataCriacao.Value).Days + 2;
         int quantidadePorDia = dto.Quantidade / periodoEmDias;
         int restoQuantidade = dto.Quantidade - (periodoEmDias * quantidadePorDia);
 
@@ -147,7 +147,7 @@ public class ObjetivosGamificadosAppService : IObjetivosGamificadosAppService
     public long AddAula(AulaDto dto)
     {
         var Aula = new Aula(dto.Descricao, dto.Resumo, dto.DataAula, dto.IdUsuario);
-        var objetivos = dto.Objetivos?.Select(x => new Objetivos("", x.Descricao, DateTime.Now, x.DataEntrega, x.Quantidade, x.TipoObjetivo, dto.IdUsuario, x.IdAula)).ToList();
+        var objetivos = dto.Objetivos?.Select(x => new Objetivos("", x.Descricao, DateTime.Now, dto.DataAula, x.Quantidade, x.TipoObjetivo, dto.IdUsuario, x.IdAula)).ToList();
         objetivos?.ForEach(x => Aula.AddObjetivo(x));
         var id = _objetivosGamificadosRepository.AddAula(Aula);
         return id;
@@ -175,7 +175,7 @@ public class ObjetivosGamificadosAppService : IObjetivosGamificadosAppService
     {
         // Find objetivos to insert
         var objetivosToInsert = objetivosDto?.Where(o => !objetivosEntidade.Any(e => e.Id == o.Id))
-        .Select(x => new Objetivos("", x.Descricao, DateTime.Now, x.DataEntrega, x.Quantidade, x.TipoObjetivo, aula.IdUsuario, aula.Id)).ToList();
+        .Select(x => new Objetivos("", x.Descricao, DateTime.Now, aula.DataAula, x.Quantidade, x.TipoObjetivo, aula.IdUsuario, aula.Id)).ToList();
         // Find objetivos to update
         var objetivosToUpdate = objetivosEntidade?.Where(o => objetivosDto.Any(e => e.Id == o.Id)).Select(x => x).ToList();
         // Find objetivos to delete
@@ -202,7 +202,6 @@ public class ObjetivosGamificadosAppService : IObjetivosGamificadosAppService
 
     public void AlterarObjetivoAula(ObjetivoDto dto, Objetivos objetivo)
     {
-        objetivo.DataEntrega = dto.DataEntrega;
         objetivo.Descricao = dto.Descricao;
         objetivo.Quantidade = dto.Quantidade;
         objetivo.TipoObjetivo = dto.TipoObjetivo;

@@ -124,7 +124,6 @@ function addObjetivos(objetivo) {
           <td>${objetivo.id}</td>
           <td>${objetivo.descricao}</td>
           <td>${objetivo.dataCriacao?.slice(0, 10) ?? ""}</td>
-          <td>${objetivo.dataEntrega.slice(0, 10)}</td>
           <td>${objetivo.quantidade}</td>
           <td>${convertTipoObjetivoParaTexto(objetivo.tipoObjetivo)}</td>
           <td>
@@ -194,14 +193,12 @@ function convertTipoObjetivoParaId(tipo) {
 function addLinha() {
     const objetivoId = document.getElementById("idObjetivo").value,
      descricao = document.getElementById("descricaoObjetivoInput").value,
-     dataEntrega = document.getElementById("dataEntregaInput").value,
      quantidade = document.getElementById("quantidadeInput").value,
      tipo = document.getElementById("tipoInput").value;
     let objetivo = {
             id: objetivoId,
             descricao: descricao,
             dataCriacao: null,
-            dataEntrega: dataEntrega,
             quantidade: quantidade,
             tipoObjetivo: tipo
         };
@@ -236,11 +233,10 @@ selectElement.addEventListener("change", (event) => {
 
 function validateModal(callback) {
     var descricao = document.getElementById("descricaoObjetivoInput").value;
-    var dataEntrega = document.getElementById("dataEntregaInput").value;
     var quantidade = document.getElementById("quantidadeInput").value;
 
     // Check if any field is blank
-    if (descricao === "" || dataEntrega === "" || quantidade === "") {
+    if (descricao === "" || quantidade === "") {
         alert("Todos os campos são obrigatórios");
         return false;
     }
@@ -248,13 +244,6 @@ function validateModal(callback) {
     // Check if quantidade is a positive number
     if (quantidade <= 0) {
         alert("A quantidade deve ser um número positivo");
-        return false;
-    }
-
-    // Check if creation date is today or later
-    var today = new Date().toISOString().split("T")[0];
-    if (dataEntrega < today) {
-        alert("A data de entrega não pode ser anterior à data atual");
         return false;
     }
 

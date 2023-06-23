@@ -210,6 +210,10 @@ public class ObjetivosGamificadosRepository : IObjetivosGamificadosRepository
         {
             var aula = (from a in _context.Aulas.Where(x => x.Id == id)
                         select a).FirstOrDefault();
+
+            var objetivos = (from o in _context.Objetivos.Where(x => x.IdAula == id)
+                             select o).ToList();
+            objetivos.ForEach(x => _context.Remove(x));
             _context.Remove(aula);
             _context.SaveChanges();
         }

@@ -35,7 +35,6 @@
                     <h5 class="mb-0">Objetivos</h5>
                     <div>
                         <button type="button" class="btn btn-primary" id="criarObjetivoBtn">Criar</button>
-                        <button type="button" class="btn btn-primary" id="deletarObjetivoBtn">Remover</button>
                     </div>
                 </div>
                 <table id="objetivosList" class="table">
@@ -44,7 +43,6 @@
                             <th scope="col" name="Id">#</th>
                             <th scope="col" name="Descricao">Descrição</th>
                             <th scope="col" name="DataCriacao">Data de criação</th>
-                            <th scope="col" name="DataEntrega">Data de entrega</th>
                             <th scope="col" name="Quantidade">Quantidade</th>
                             <th scope="col" name="TipoObjetivo">Tipo de objetivo</th>
                         </tr>
@@ -74,10 +72,6 @@
                             <div class="mb-3">
                                 <label for="descricaoObjetivoInput" class="form-label">Descrição</label>
                                 <input type="text" class="form-control" id="descricaoObjetivoInput" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="dataEntregaInput" class="form-label">Data de entrega</label>
-                                <input type="date" class="form-control" id="dataEntregaInput" required>
                             </div>
                             <div class="mb-3">
                                 <label for="tipoInput" class="form-label">Tipo de objetivo</label>
