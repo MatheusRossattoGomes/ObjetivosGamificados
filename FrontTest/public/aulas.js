@@ -12,8 +12,8 @@ const loadTable = () => {
         for (let object of objects) {
           trHTML += '<tr>';
           trHTML += '<td>' + object['id'] + '</td>';
-          trHTML += '<td>' + object['dataAulaString'] + '</td>';
           trHTML += '<td>' + object['descricao'] + '</td>';
+          trHTML += '<td>' + object['dataAulaString'] + '</td>';
           trHTML += '&ensp;';
           trHTML += '<td><button type="button" class="btn btn-outline-secondary" onclick="showFormEdicao(' + object['id'] + ')">Editar</button>';
           trHTML += '&ensp;';
@@ -79,8 +79,11 @@ function imprimirAula(id) {
       printWindow.document.write(classDataHtml);
       printWindow.document.close();
 
-      // Print the document
-      printWindow.print();
+      // Wait for Bootstrap styles to load
+      setTimeout(function() {
+        // Print the document
+        printWindow.print();
+      }, 1000); // Adjust the delay as needed
     })
     .catch(function (error) {
       console.log(error);
