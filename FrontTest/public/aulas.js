@@ -124,17 +124,34 @@ function getClassDataHtml(classData) {
     return iconClass;
   }
 
+  var i = 0;
   // Generate the table rows for objectives
   var objectivesTableRows = classData.objetivos.map(function (objective) {
+    i++;
     const tipoObjetivoIconClass = convertTipoObjetivoParaIconClass(objective.tipoObjetivo);
     return `
       <tr>
         <td>
           <i class="fas ${tipoObjetivoIconClass} objective-icon"></i>
-          ${objective.descricao}
         </td>
+        <td>
+          ${i}
+        </td>
+        <td>${objective.descricao}</td>
         <td>${objective.quantidade}</td>
         <td>${convertTipoObjetivoParaTexto(objective.tipoObjetivo)}</td>
+      </tr>
+    `;
+  }).join('');
+
+  var numeroAlunos = 25 // Quando tiver um cadastro de alunos por aula alterar para usar o numro correto
+  var espacoEmBranco =  Array(numeroAlunos).fill('').map(function () {
+    return `
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     `;
   }).join('');
@@ -214,29 +231,46 @@ function getClassDataHtml(classData) {
         .fa-question-circle {
           color: #ffc107;
         }
+        
+        .table-bordered th,
+        .table-bordered td {
+          border: 1px solid #dee2e6;
+        }
       </style>
     </head>
     <body>
       <div class="container mt-5">
         <h1>Informações da Aula - ${classData.descricao}</h1>
-        <p>
-          <strong>Descrição:</strong> ${classData.descricao}
-        </p>
-        <p>
-          <strong>Data:</strong> ${classData.dataAula.slice(0, 10)}
-        </p>
+        <p><strong>Descrição da aula:</strong> ${classData.descricao}  <strong>Data:</strong> ${classData.dataAula.slice(0, 10)}</p>
 
         <h2>Objetivos</h2>
         <table class="table">
           <thead>
             <tr>
+              <th></th>
+              <th>Número</th>
               <th>Descrição</th>
               <th>Quantidade</th>
               <th>Tipo de Objetivo</th>
             </tr>
           </thead>
           <tbody>
-            ${objectivesTableRows}
+            ${objectivesTableRows}  
+          </tbody>
+        </table>
+        
+        <h2>Anotações aulas</h2>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Estudante</th>
+              <th>Id objetivo</th>
+              <th>Objetivo alcançado?</th>
+              <th>Observações</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${espacoEmBranco}
           </tbody>
         </table>
       </div>
